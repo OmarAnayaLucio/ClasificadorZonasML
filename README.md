@@ -8,6 +8,31 @@ Clasifica automáticamente colonias mexicanas en **Caliente**, **Tibia** o **Fr�
 
 ---
 
+```mermaid
+flowchart TD
+    A[Fuente de datos<br/>Excel / CSV / Google Sheets] --> B[Lectura y limpieza]
+    B --> C{¿Columna 'Tipo Zona'<br/>tiene etiqueta?}
+    
+    C -->|Sí: Caliente/Tibia/Fría| D[Extracción de features]
+    C -->|No: #N/A o vacío| E[Extracción de features]
+    
+    D --> F[Features inmobiliarias]
+    F --> G[SMOTE + Balanceo de clases]
+    G --> H[Entrenamiento<br/>Ensemble Voting]
+    H --> I[Modelo guardado<br/>.pkl]
+    
+    E --> J[Mismas features]
+    J --> I
+    
+    I --> K[Predicción]
+    K --> L[Clasificación final:<br/>Caliente/Tibia/Fría]
+    
+    L --> M[Exportar Excel con<br/>confianza y probabilidades]
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style H fill:#bbf,stroke:#333,stroke-width:2px
+    style L fill:#9f9,stroke:#333,stroke-width:2px
+
 ## 📌 Tabla de contenido
 
 - [¿Qué hace?](#qué-hace)
